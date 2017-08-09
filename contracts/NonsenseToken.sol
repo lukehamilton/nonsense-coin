@@ -31,6 +31,42 @@ library SafeMath {
   }
 }
 
+/**
+ * @title Ownable
+ * @dev The Ownable contract has an owner address, and provides basic authorization control
+ * functions, this simplifies the implementation of "user permissions".
+ */
+ contract Ownable {
+   address public owner
+
+   /**
+    * @dev The Ownable constructor sets the original `owner` of the contract to the sender
+    * account.
+    */
+    function Ownable()  {
+      owner = msg.sender;
+    }
+
+    /**
+     * @dev Throws if called by any account other than the owner.
+     */
+     modifier onlyOwner() {
+       if (msg.sender != owner) {
+         throw;
+       }
+       _;
+     }
+
+     /**
+      * @dev Allows the current owner to transfer control of the contract to a newOwner.
+      * @param newOwner The address to transfer ownership to.
+      */
+      function transferOwnership(address newOwner) onlyOwner {
+        if (newOwner != address(0)) {
+          owner = newOwner;
+        }
+      }
+ }
 
 /**
  * @title ERC20Basic
@@ -93,7 +129,7 @@ contract BasicToken is ERC20Basic {
  * @dev https://github.com/ethereum/EIPs/issues/20
  * @dev Based on code by FirstBlood: https://github.com/Firstbloodio/token/blob/master/smart_contract/FirstBloodToken.sol
  */
- contract StandardToken is ERC20, BasicToken {
+contract StandardToken is ERC20, BasicToken {
 
    mapping (address => mapping (address => uint256)) allowed;
 
@@ -134,4 +170,50 @@ contract BasicToken is ERC20Basic {
        return true;
      }
 
- }
+     /**
+      * @dev Function to check the amount of tokens that an owner allowed to a spender.
+      * @param _owner address The address which owns the funds.
+      * @param _spender address The address which will spend the funds.
+      * @return A uint256 specifing the amount of tokens still avaible for the spender.
+      */
+     function allowance(address _owner, address _spender) constant returns (uint256 remaining)  {
+       return allowed[_owner][_spender];
+     }
+}
+
+/** * @title Mintable token * @dev Simple ERC20 Token example, with mintable token creation * @dev Issue: * https://github.com/OpenZeppelin/zeppelin-solidity/issues/120 * Based on code by TokenMarketNet: https://github.com/TokenMarketNet/ico/blob/master/contracts/MintableToken.sol */
+contract MintableToken is StandardToken, Ownable {
+  event Mint(address indexed to, uint256 amount);
+  event MintFinished();
+
+  bool public mintingFinished = false;
+
+  modifier canMint()  {
+    if (mintingFinished) throw;
+    _;
+  }
+
+  /**
+   * @dev Function to mint tokens
+   * @param _to The address that will recieve the minted tokens.
+   * @param _amount The amount of tokens to mint.
+   * @return A boolean that indicates if the operation was successful.
+   */
+   function mint(address _to, uint256 _amount) onlyOwner canMint returns (bool) {
+     totalSupply = totalSupply.add(_amount);
+     balances[_to] = balances[_to].add(_amount);
+     Mint(_to, _amount);
+     return true;
+   }
+
+   /**
+    * @dev Function to stop minting new tokens.
+    * @return True if the operation was successful.
+    */
+    function finishMinting() onlyOwner returns (bool) {
+      mintingFinished = true;
+      MintFinished();
+      return true;
+    }
+
+}
