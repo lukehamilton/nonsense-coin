@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 
 // Import libraries we need.
 import { default as Web3} from 'web3';
@@ -11,16 +10,14 @@ import './css/oswald.css'
 import './css/open-sans.css'
 import './css/pure-min.css'
 import './App.css'
-// import abi from '../build/contracts/NonsenseTokenCrowdsale.json'
+
+// Contracts
 import artifacts from '../build/contracts/NonsenseTokenCrowdsale.json'
 let Crowdsale = contract(artifacts)
-// let crowdsaleContractInstance = CrowdsaleContract.at(address)
-// var NonsenseTokenCrowdsale = contract(nonsense_token_crowdsale_artifacts)
 
 class App extends Component {
 
   render() {
-
     return (
       <div className="App">
         <a onClick={this.sendTx}>Send TX</a>
@@ -29,8 +26,6 @@ class App extends Component {
   }
 
   sendTx()  {
-    // console.log('ABI', abi);
-    // var abi=[//your abi array];
     let web3 = window.web3
     let account1 = web3.eth.accounts[1]
     Crowdsale.setProvider(web3.currentProvider)
