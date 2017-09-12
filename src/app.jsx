@@ -11,11 +11,20 @@ import './css/open-sans.css'
 import './css/pure-min.css'
 import './App.css'
 
+// App Store
+import Store from './store'
+
 // Contracts
 import artifacts from '../build/contracts/NonsenseTokenCrowdsale.json'
 let Crowdsale = contract(artifacts)
 
 class App extends Component {
+
+  constructor(props)  {
+    super(props)
+    this.store = new Store()
+    console.log('App constructor');
+  }
 
   render() {
     return (

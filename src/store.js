@@ -1,22 +1,16 @@
-import { browserHistory } from 'react-router'
-import { createStore, applyMiddleware, compose } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import { routerMiddleware } from 'react-router-redux'
-import reducer from './reducer'
+import { observable } from 'mobx'
+import Web3 from 'web3'
 
-// Redux DevTools
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+class Store {
 
-const routingMiddleware = routerMiddleware(browserHistory)
+  constructor (props) {
+    console.log('Store constructor');
+  }
 
-const store = createStore(
-  reducer,
-  composeEnhancers(
-    applyMiddleware(
-      thunkMiddleware,
-      routingMiddleware
-    )
-  )
-)
+  getWeb3() {
 
-export default store
+  }
+
+}
+
+export default Store

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 class Home extends Component {
   render() {
+    console.log('HOME');
     return(
       <main className="container">
         <div className="pure-g">
