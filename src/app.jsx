@@ -9,7 +9,8 @@ import { default as contract } from 'truffle-contract'
 import './css/oswald.css'
 import './css/open-sans.css'
 import './css/pure-min.css'
-import './App.css'
+import './app.scss'
+import 'bootstrap/dist/css/bootstrap.css';
 
 // App Store
 import Store from './store'
@@ -23,13 +24,25 @@ class App extends Component {
   constructor(props)  {
     super(props)
     this.store = new Store()
+    window.store = this.store
     console.log('App constructor');
   }
 
   render() {
     return (
       <div className="App">
-        <a onClick={this.sendTx}>Send TX</a>
+        <header className='navbar__wrapper'>
+          <div className='navbar'>
+            Test
+          </div>
+        </header>
+        <div className='container'>
+          <div className='md-col-12'>
+
+            <a onClick={this.sendTx}>Send TX</a>
+          </div>
+        </div>
+
       </div>
     );
   }

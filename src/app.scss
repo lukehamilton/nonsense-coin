@@ -1,0 +1,16 @@
+//  {
+//   background-color: red;
+// }
+.navbar {
+  display: flex;
+  align-items: center;
+  max-width: 1170px;
+  margin: 0 auto;
+  min-height: 68px;
+  padding: 0 15px;
+  &__wrapper {
+    border-bottom: 1px solid #e1e1e1;
+    background-color: white;
+  }
+
+}
