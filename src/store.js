@@ -1,16 +1,26 @@
-import { observable } from 'mobx'
-import Web3 from 'web3'
+import { observable }          from 'mobx'
+import Web3                    from 'web3'
+import { default as truffleContract } from 'truffle-contract'
+
+// Contracts
+import artifacts from '../build/contracts/NonsenseTokenCrowdsale.json'
 
 class Store {
   @observable web3
   @observable web3Provider
 
   constructor (props) {
-    console.log('Store constructor');
     this.getWeb3().then( (results) => {
-      console.log('results', results);
       this.web3 = results.web3Instance
       this.web3Provider = results.web3Provider
+      this.contract = truffleContract(artifacts)
+      this.contract.setProvider(this.web3.currentProvider)
+      this.contract.deployed().then( (crowdsale) => {
+        console.log('crowdsale', crowdsale);
+      })
+
+      // this.artifacts = artifacts
+
     }).catch( (e) => {
       console.log('Error getting Web 3');
     })

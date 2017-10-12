@@ -3,7 +3,6 @@ import { Link } from 'react-router'
 
 // Import libraries we need.
 import { default as Web3} from 'web3';
-import { default as contract } from 'truffle-contract'
 
 // Styles
 import './css/oswald.css'
@@ -14,10 +13,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 // App Store
 import Store from './store'
-
-// Contracts
-import artifacts from '../build/contracts/NonsenseTokenCrowdsale.json'
-let Crowdsale = contract(artifacts)
 
 class App extends Component {
 
@@ -33,13 +28,13 @@ class App extends Component {
       <div className="App">
         <header className='navbar__wrapper'>
           <div className='navbar'>
-            Test
+            Logo
           </div>
         </header>
         <div className='container'>
           <div className='md-col-12'>
 
-            <a onClick={this.sendTx}>Send TX</a>
+            {/* <a onClick={this.sendTx}>Send TX</a> */}
           </div>
         </div>
 
@@ -48,12 +43,12 @@ class App extends Component {
   }
 
   sendTx()  {
-    let web3 = window.web3
-    let account1 = web3.eth.accounts[1]
-    Crowdsale.setProvider(web3.currentProvider)
-    Crowdsale.deployed().then(function(instance)  {
-      instance.sendTransaction({ from: account1, value: web3.toWei(5, "ether")})
-    })
+    // let web3 = window.web3
+    // let account1 = web3.eth.accounts[1]
+    // Crowdsale.setProvider(web3.currentProvider)
+    // Crowdsale.deployed().then(function(instance)  {
+    //   instance.sendTransaction({ from: account1, value: web3.toWei(5, "ether")})
+    // })
 
     // var contractAddress = "0x36de1fcd6c23c8b66ff14105b84cbd7674863dd6";
     // var contractAddress = '0x6b5decb6b58c88c70844587169d8e6e471a7925a'
